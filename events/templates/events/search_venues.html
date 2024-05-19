@@ -1,0 +1,23 @@
+{% extends 'events/base.html' %} {% block content %}
+<center>
+  {% if searched %}
+  <h1>Your search for {{searched}}...</h1>
+  <br />
+  {% for venue in venues %}
+  <a href="{% url 'show-venue' venue.id %}">{{venue}} - {{venue.web}}</a>
+  <h1>Name: {{venue}}</h1>
+  <h3>Address: {{venue.address}}</h3>
+  <h3>Phone: {{venue.phone}}</h3>
+  <h3>Email Address : {{venue.email_address}}</h3>
+  <h3>Zip Code : {{venue.zip_code}}</h3>
+  <h3>Web: <a href="{{venue.web}}">{{venue.web}}</a></h3>
+  <h3>Owner: {{venue.owner}}</h3>
+  {% if venue_owner %}
+  <h3>Owner: {{venue_owner}}</h3>
+  {% endif %}
+  <h3>Owner email: {{venue_owner.email}}</h3>
+  {% endfor %} {% else %}
+  <h1>yo forgot to search ...</h1>
+  {% endif %}
+</center>
+{% endblock %}

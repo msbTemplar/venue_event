@@ -1,0 +1,63 @@
+{% extends 'events/base.html' %} {% block content %}
+<h1>Events:</h1>
+<ul>
+  {% for event in event_list %}
+  {% if event.approved %}
+  <div class="m-3">
+  <div class="card" style="width: 18rem">
+    <div class="card-header">{{event}}</div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">{{event.name}}</li>
+      <li class="list-group-item">{{event.event_date}}</li>
+      <li class="list-group-item">Time stamp position : {{event.Is_Past}}</li>
+      <li class="list-group-item">Days Till event: {{event.Days_till}}</li>
+      <li class="list-group-item">{{event.venue}}</li>
+      <li class="list-group-item">{{event.manager}}</li>
+      <li class="list-group-item">{{event.description}}</li>
+      <li class="list-group-item">Approved: {{event.approved}}</li>
+      <li class="list-group-item">
+        <h1>attendees</h1>
+        {% for user in event.attendees.all %}
+        <h4>{{user.first_name}} - {{user.last_name}}</h4>
+        <h4>{{user.email}}</h4>
+        {% endfor %}
+      </li>
+    </ul>
+  </div>
+  {% if user.is_authenticated %}
+  {% if user == event.manager %}
+  <div class="card-footer text-muted">
+    
+    <a href="{% url 'update-event' event.id %}" class="btn btn-success">Update Event</a>
+    <a href="{% url 'delete-event' event.id %}" class="btn btn-danger">Delete Event</a>
+      
+    
+  </div>
+  {% endif %}
+  {% endif %}
+</div>
+  <!-- <li>
+    <ul>
+        <li><h1>{{event.name}}</h1></li>
+        <li><h1>{{event.event_date}}</h1></li>
+        <li><h1>{{event.venue}}</h1></li>
+       
+        <li><h1>{{event.manager}}</h1></li>
+        <li><h1>{{event.description}}</h1></li>
+        <li>
+            <h1>attendees</h1>
+            {% for user in event.attendees.all %}
+            <li><h2>{{user.first_name}}  </h2></li>
+            <li> <h2>{{user.last_name}}  </h2></li>
+            <li> <h2>{{user.email}}  </h2></li>
+            {% endfor %}
+        </li>
+    </ul>
+  
+    
+  </li> -->
+  {% endif %}
+  {% endfor %}
+</ul>
+
+{% endblock %}

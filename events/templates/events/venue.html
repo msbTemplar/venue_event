@@ -1,0 +1,63 @@
+{% extends 'events/base.html' %}
+
+{% block content %}
+<center>
+    <h1>Venues</h1>
+    <!-- antes venue_list-->
+  {% for venue in venues %}
+  {% if user.is_authenticated %}
+  <a href="{% url 'show-venue' venue.id %}">{{venue}} - {{ venue.web }}<br></a> <h2><a class="btn btn-warning" href="{% url 'update-venue' venue.id %}">Update</a> <a class="btn btn-danger" href="{% url 'delete-venue' venue.id %}">Delete</a> </h2>
+  
+  
+  {% endif %}
+  {% endfor %}
+  <br><br>
+  {{venues}} <br>
+  has previous:{{ venues.has_previous }} <br>
+  has next:{{ venues.has_next }} <br>
+  current page: {{ venues.number }} <br>
+  number of pages : {{ venues.paginator.num_pages }}
+  <hr><br><br>
+  <br>
+  {% if venues.has_previous %}
+    <a class="btn btn-primary" href="?page=1">&laquo; First</a>
+    <a class="btn btn-success" href="?page={{ venues.previous_page_number }}">Previous</a>
+  {% endif %}
+
+  <div class="btn btn-light">Page {{ venues.number }} of {{ venues.paginator.num_pages }}</div>
+  {% if venues.has_next %}
+  <a class="btn btn-danger" href="?page={{venues.next_page_number}}">Next</a>
+    <a class="btn btn-warning" href="?page={{ venues.paginator.num_pages }}">Last &raquo;</a>
+  {% endif %}
+  <br><br>
+
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      {% if venues.has_previous %}
+      <li class="page-item m-1"><a class="btn btn-primary page-link" href="?page=1">&laquo; First</a></li>
+      <li class="page-item m-1"><a class="btn btn-success page-link" href="?page={{ venues.previous_page_number }}">Previous</a></li>
+     
+      
+      {% endif %}
+
+      <li class="page-item m-1 page-link">Page {{ venues.number }} of {{ venues.paginator.num_pages }}</li>
+      
+      {% for i in nums %}
+      <li class="page-item m-1"><a class="btn btn-danger page-link" href="?page={{forloop.counter }}">{{ forloop.counter }}</a></li>
+      {%  endfor %}
+      
+      {% if venues.has_next %}
+     
+    
+      <li class="page-item m-1"><a class="btn btn-danger page-link" href="?page={{venues.next_page_number}}">Next</a></li>
+      <li class="page-item m-1"><a class="btn btn-warning page-link" href="?page={{ venues.paginator.num_pages }}">Last &raquo;</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+
+  <br>
+  
+  {{nums}}
+  
+  </center>
+{% endblock %}
